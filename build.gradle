@@ -1,0 +1,77 @@
+plugins {
+    id 'java'
+    id 'kr.entree.spigradle' version '1.0.6'
+}
+
+apply plugin: 'java'
+
+group = 'kr.yunah'
+version = pluginVersion
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+    protocolLib()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        url 'https://maven.heartpattern.kr/repository/maven-public/'
+    }
+    maven {
+        url 'http://repo.citizensnpcs.co/'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly protocolLib()
+    compileOnly 'net.citizensnpcs:citizens:2.0.25-SNAPSHOT'
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+    compileOnly 'com.destroystokyo.paper:paper-api:1.14.4-R0.1-SNAPSHOT'
+    testImplementation paper()
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+spigot {
+    commands {
+        w {}
+        돈 {}
+        튜토리얼 {}
+        친구 {}
+        Warp {}
+        아이템매니저 {}
+        귓속말 {}
+        이동수단 {}
+        길드 {}
+        몬스터 {}
+    }
+    depend = ['Multiverse-Core']
+    apiVersion = '1.14'
+}
+
+jar {
+    archiveBaseName = 'YunahServer'
+}
+
+
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
